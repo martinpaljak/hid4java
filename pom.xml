@@ -33,18 +33,16 @@
     <url>https://github.com/gary-rowe/hid4java/issues</url>
   </issueManagement>
 
+  <!-- Default is publishing to private Maven repo on javacard.pro -->
   <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>javacard</id>
+      <url>scpexe://mvn@javacard.pro/home/mvn/maven/</url>
     </repository>
-    <downloadUrl>https://oss.sonatype.org/content/groups/public/org/hid4java</downloadUrl>
+    <snapshotRepository>
+      <id>javacard</id>
+      <url>scpexe://mvn@javacard.pro/home/mvn/maven/SNAPSHOTS</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <scm>
@@ -96,6 +94,13 @@
   </profiles>
 
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh-external</artifactId>
+        <version>3.5.3</version>
+      </extension>
+    </extensions>
     <plugins>
 
       <!-- Filter out functional tests by Maven (an IDE will run all tests including functional) -->
